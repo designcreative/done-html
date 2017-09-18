@@ -3,6 +3,8 @@ var gulp = require("gulp"),
     autoprefixer = require("gulp-autoprefixer"),
     jade = require("gulp-jade"),
     imagemin = require("gulp-imagemin"),
+    uglify = require("gulp-uglify"),
+    concat = require("gulp-concat"),
     browserSync = require("browser-sync").create();
 
 gulp.task("sass", function() {
@@ -13,6 +15,15 @@ gulp.task("sass", function() {
       .pipe(browserSync.reload({
         stream: true
       }));
+});
+
+gulp.task('js', function() {
+  gulp.src("src/js/*")
+    .pipe(concat("main.js"))
+    .pipe(gulp.dest("dist/js"))
+    .pipe(browserSync.reload({
+      stream: true
+    }));
 });
 
 gulp.task("imagemin", function() {
@@ -43,10 +54,11 @@ gulp.task("browserSync", function () {
   });
 });
 
-gulp.task("watch", ["browserSync", "sass", "jade", "imagemin"], function () {
+gulp.task("watch", ["browserSync", "sass", "jade", "imagemin", "js"], function () {
   gulp.watch("src/sass/**/*.sass", ["sass"]);
   gulp.watch("src/**/*.jade", ["jade"]);
   gulp.watch("src/img/*", ["imagemin"]);
+  gulp.watch("src/js/*", ["js"]);
 });
 
 gulp.task("default", ["watch"]);
