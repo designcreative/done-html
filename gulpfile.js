@@ -8,7 +8,7 @@ var gulp = require("gulp"),
     browserSync = require("browser-sync").create();
 
 gulp.task("sass", function() {
-  return gulp.src("src/sass/custom.sass")
+  return gulp.src("src/sass/master.sass")
       .pipe(sass())
       .pipe(autoprefixer())
       .pipe(gulp.dest("dist/css"))
